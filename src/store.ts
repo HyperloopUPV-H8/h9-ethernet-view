@@ -1,21 +1,5 @@
-import { configureStore } from "@reduxjs/toolkit";
-import podDataReducer from "slices/podDataSlice";
-import orderReducer from "slices/ordersSlice";
-import { connectionsReducer } from "slices/connectionsSlice";
-import messagesReducer from "slices/messagesSlice";
-import { measurementsReducer } from "slices/measurementsSlice";
-import columnsSlice from "slices/columnsSlice";
+import { useStore } from "common";
 
-export const store = configureStore({
-    reducer: {
-        podData: podDataReducer,
-        measurements: measurementsReducer,
-        orders: orderReducer,
-        connections: connectionsReducer,
-        messages: messagesReducer,
-        columns: columnsSlice,
-    },
-    middleware: [],
-});
+const store = useStore();
 
-export type RootState = ReturnType<typeof store.getState>;
+export default store;
