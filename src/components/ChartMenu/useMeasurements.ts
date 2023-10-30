@@ -1,11 +1,10 @@
-import { updateMeasurements } from "slices/measurementsSlice";
-import { useDispatch } from "react-redux";
 import { useSubscribe } from "common";
+import store from "store"
 
 export function useMeasurements() {
-    const dispatch = useDispatch();
+    const { updateMeasurements } = store;
 
     useSubscribe("podData/update", (msg) => {
-        dispatch(updateMeasurements(msg));
+        updateMeasurements(msg);
     });
 }

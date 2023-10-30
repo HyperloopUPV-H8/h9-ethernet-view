@@ -7,19 +7,17 @@ import {
     Loader,
 } from "common";
 import { HomePage } from "pages/HomePage/HomePage";
-import { useDispatch } from "react-redux";
-import { initMeasurements } from "slices/measurementsSlice";
-import { initPodData } from "slices/podDataSlice";
+import store from "store";
 import { SplashScreen } from "components/SplashScreen/SplashScreen";
-import { setWebSocketConnection } from "slices/connectionsSlice";
 
 function App() {
-    const dispatch = useDispatch();
     const config = useConfig();
     const podDataDescriptionPromise = useFetchBack(
         import.meta.env.PROD,
         config.paths.podDataDescription
     );
+
+    const { initMeasurements, initPodData, setBackendConnection } = store;
 
     const SERVER_URL = import.meta.env.PROD
         ? `${config.prodServer.ip}:${config.prodServer.port}/${config.paths.websocket}`
@@ -32,12 +30,12 @@ function App() {
                     createWsHandler(
                         SERVER_URL,
                         true,
-                        () => dispatch(setWebSocketConnection(true)),
-                        () => dispatch(setWebSocketConnection(false))
+                        () => setBackendConnection(true),
+                        () => setBackendConnection(false),
                     ),
                     podDataDescriptionPromise.then((adapter) => {
-                        dispatch(initPodData(adapter));
-                        dispatch(initMeasurements(adapter));
+                        initPodData(adapter);
+                        initMeasurements(adapter);
                     }),
                 ]}
                 LoadingView={<SplashScreen />}
