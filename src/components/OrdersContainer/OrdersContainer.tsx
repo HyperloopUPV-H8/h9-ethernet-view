@@ -3,11 +3,11 @@ import { Orders } from "./Orders/Orders";
 import { useConfig, useFetchBack } from "common";
 import { useEffect } from "react";
 import { useOrders } from "common";
-import store from "store";
+import { useOrdersStore } from "common";
 
 export const OrdersContainer = () => {
     const config = useConfig();
-    const { setOrders } = store;
+    const setOrders = useOrdersStore((state) => state.setOrders);
 
     const orderDescriptionPromise = useFetchBack(
         import.meta.env.PROD,

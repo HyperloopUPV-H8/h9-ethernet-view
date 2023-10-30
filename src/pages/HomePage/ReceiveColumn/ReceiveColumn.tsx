@@ -4,16 +4,14 @@ import { ReactComponent as IncomingMessage } from "assets/svg/incoming-message.s
 import { ReactComponent as Chart } from "assets/svg/chart.svg";
 import { ReceiveTable } from "components/ReceiveTable/ReceiveTable";
 import { useMemo } from "react";
-import { useSubscribe } from "common";
+import { useMeasurementsStore, usePodDataStore, useSubscribe } from "common";
 import { createSidebarSections } from "components/ChartMenu/sidebar";
-import store from "store";
 
 export const ReceiveColumn = () => {
-    const { podData, updatePodData, updateMeasurements } = store;
+    const {podData, updatePodData} = usePodDataStore(state => ({podData: state.podData, updatePodData: state.updatePodData}))
+    const updateMeasurements = useMeasurementsStore(state => state.updateMeasurements)
 
     useSubscribe("podData/update", (update) => {
-        // dispatch(updatePodData(update));
-        // dispatch(updateMeasurements(update));
         updatePodData(update);
         updateMeasurements(update);
     });
@@ -22,8 +20,7 @@ export const ReceiveColumn = () => {
         return createSidebarSections(podData);
     }, []);
 
-    const receiveColumnTabItems = useMemo(
-        () => [
+    const receiveColumnTabItems = [
             {
                 id: "receiveTable",
                 name: "Packets",
@@ -38,9 +35,7 @@ export const ReceiveColumn = () => {
                 icon: <Chart />,
                 component: <ChartMenu sidebarSections={sections} />,
             },
-        ],
-        [store]
-    );
+        ]
 
     return <TabLayout items={receiveColumnTabItems}></TabLayout>;
 };

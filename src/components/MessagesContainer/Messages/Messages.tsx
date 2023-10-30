@@ -3,7 +3,7 @@ import styles from "./Messages.module.scss";
 import { MessageView } from "./MessageView/MessageView";
 import { useAutoScroll } from "./useAutoScroll";
 import { Button } from "components/FormComponents/Button/Button";
-import store from "store"
+import { useMessagesStore } from "common";
 
 type Props = {
     messages: Array<Message>;
@@ -11,7 +11,7 @@ type Props = {
 
 export const Messages = ({ messages }: Props) => {
     const { ref, handleScroll } = useAutoScroll(messages);
-    const { clearMessages } = store;
+    const clearMessages = useMessagesStore((state) => state.clearMessages);
 
     return (
         <section className={styles.messagesWrapper}>

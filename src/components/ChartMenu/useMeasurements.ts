@@ -1,8 +1,8 @@
 import { useSubscribe } from "common";
-import store from "store"
+import { useMeasurementsStore } from "common";
 
 export function useMeasurements() {
-    const { updateMeasurements } = store;
+    const updateMeasurements = useMeasurementsStore(state => state.updateMeasurements)
 
     useSubscribe("podData/update", (msg) => {
         updateMeasurements(msg);

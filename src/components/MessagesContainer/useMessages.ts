@@ -1,9 +1,9 @@
 import { MessageAdapter, useSubscribe } from "common";
-import store from "store";
+import { useMessagesStore } from "common";
 
 
 export function useMessages() {
-    const { messages, addMessage } = store;
+    const { messages, addMessage } = useMessagesStore(state => ({messages: state.messages, addMessage: state.addMessage}));
 
     useSubscribe("message/update", (msg: MessageAdapter) => {
         addMessage(msg);
