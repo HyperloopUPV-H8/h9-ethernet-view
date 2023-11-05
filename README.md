@@ -2,6 +2,8 @@
 
 This is the official frontend for the HyperloopUPV verification software *Ethernet View*.
 
+**This repository has been migrated to [this monorepo](https://github.com/HyperloopUPV-H8/h9-software) and will continue to receive updates there**
+
 ## Building
 
 To build the site, run `npm run build` in a terminal set at the root of the project. Then rename the generated folder to static and follow the instructions in the "Building" section of the backend repository.
